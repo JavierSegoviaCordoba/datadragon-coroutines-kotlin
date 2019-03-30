@@ -1,6 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.21'
     id "com.jfrog.bintray" version "1.8.4"
+    id "maven-publish"
 }
 
 group 'DataDragonCoroutinesKotlin'
@@ -23,6 +24,11 @@ dependencies {
     testImplementation 'org.koin:koin-test:2.0.0-rc-1'
 }
 
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
@@ -37,6 +43,9 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
+
+    publish = true
+
     pkg {
         repo = 'datadragon-coroutines-kotlin'
         name = group
@@ -45,6 +54,19 @@ bintray {
         vcsUrl = 'https://github.com/JavierSegoviaCordoba/datadragon-coroutines-kotlin'
         version {
             name = "1.0"
+        }
+    }
+    publications = ['Publication']
+}
+
+publishing {
+    publications {
+        Publication(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            groupId 'com.javiersc'
+            artifactId project.name
+            version project.version
         }
     }
 }
