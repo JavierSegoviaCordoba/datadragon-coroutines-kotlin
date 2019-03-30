@@ -1,9 +1,10 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+    id "com.jfrog.bintray" version "1.8.4"
 }
 
 group 'DataDragonCoroutinesKotlin'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -27,4 +28,23 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+// Bintray
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    pkg {
+        repo = 'datadragon-coroutines-kotlin'
+        name = group
+        userOrg = user
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/JavierSegoviaCordoba/datadragon-coroutines-kotlin'
+        version {
+            name = "1.0"
+        }
+    }
 }
