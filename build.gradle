@@ -8,24 +8,24 @@ group 'DataDragonCoroutinesKotlin'
 version '1.0'
 
 repositories {
-    mavenCentral()
     jcenter()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0-alpha'
-    implementation "com.squareup.retrofit2:retrofit:2.5.1-SNAPSHOT"
-    implementation "com.squareup.retrofit2:converter-gson:2.5.1-SNAPSHOT"
-    implementation 'com.squareup.retrofit2:converter-jackson:2.5.1-SNAPSHOT'
-    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7"
-    implementation 'org.koin:koin-core:2.0.0-rc-1'
-    testImplementation 'org.koin:koin-test:2.0.0-rc-1'
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0-alpha'
+    api "com.squareup.retrofit2:retrofit:2.5.1-SNAPSHOT"
+    api "com.squareup.retrofit2:converter-gson:2.5.1-SNAPSHOT"
+    api 'com.squareup.retrofit2:converter-jackson:2.5.1-SNAPSHOT'
+    api "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7"
+    api 'org.koin:koin-core:2.0.0-rc-2'
+    testApi "org.jetbrains.kotlin:kotlin-test"
+    testApi "org.jetbrains.kotlin:kotlin-test-junit"
 }
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
@@ -53,7 +53,7 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/JavierSegoviaCordoba/datadragon-coroutines-kotlin'
         version {
-            name = "1.0"
+            name = project.version
         }
     }
     publications = ['Publication']
@@ -70,3 +70,4 @@ publishing {
         }
     }
 }
+

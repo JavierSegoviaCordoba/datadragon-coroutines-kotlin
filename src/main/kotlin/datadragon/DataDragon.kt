@@ -2,6 +2,7 @@ package datadragon
 
 import datadragon.constants.Locale
 import datadragon.constants.Platform
+import datadragon.di.modules
 import datadragon.repository.DataDragonApi
 import datadragon.service.cdn.champion.dto.Champion
 import datadragon.service.cdn.championfulllist.dto.ChampionFull
@@ -13,7 +14,6 @@ import datadragon.service.cdn.runesreforged.dto.Rune
 import datadragon.service.cdn.runesreforged.dto.RuneReforged
 import datadragon.service.cdn.sticker.dto.Sticker
 import datadragon.service.cdn.summonerspell.dto.SummonerSpell
-import modules
 import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.inject
