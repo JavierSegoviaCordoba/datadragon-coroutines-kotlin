@@ -23,7 +23,6 @@ interface DataDragonApi {
 
     //cdn
     suspend fun getChampion(version: String, locale: Locale, championName: String): ChampionDto
-
     suspend fun getChampionFullList(version: String, locale: Locale): ChampionFullDto
     suspend fun getChampionList(version: String, locale: Locale): ChampionShortDto
     suspend fun getItem(version: String, locale: Locale): ItemDto
@@ -39,13 +38,11 @@ interface DataDragonApi {
     suspend fun getRealms(platform: Platform): Realms
 }
 
-class DataDragonApiImpl(private val dataDragonService: DataDragonService) :
-    DataDragonApi {
+class DataDragonApiImpl(private val dataDragonService: DataDragonService) : DataDragonApi {
 
     //api
     override suspend fun getVersionsList(): List<String> =
         dataDragonService.GetVersionsList().await()
-
 
     //cdn
     override suspend fun getChampion(version: String, locale: Locale, championName: String): ChampionDto =
