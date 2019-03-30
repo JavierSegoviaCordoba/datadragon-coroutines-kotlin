@@ -19,9 +19,11 @@ import retrofit2.await
 interface DataDragonApi {
 
     //api
+
     suspend fun getVersionsList(): List<String>
 
     //cdn
+
     suspend fun getChampion(version: String, locale: Locale, championName: String): ChampionDto
     suspend fun getChampionFullList(version: String, locale: Locale): ChampionFullDto
     suspend fun getChampionList(version: String, locale: Locale): ChampionShortDto
@@ -35,16 +37,19 @@ interface DataDragonApi {
     suspend fun getSummonerSpell(version: String, locale: Locale): SummonerSpellDto
 
     //realms
+
     suspend fun getRealms(platform: Platform): Realms
 }
 
 class DataDragonApiImpl(private val dataDragonService: DataDragonService) : DataDragonApi {
 
     //api
+
     override suspend fun getVersionsList(): List<String> =
         dataDragonService.GetVersionsList().await()
 
     //cdn
+
     override suspend fun getChampion(version: String, locale: Locale, championName: String): ChampionDto =
         dataDragonService.GetChampion(version, locale.id, championName).await()
 
@@ -79,6 +84,7 @@ class DataDragonApiImpl(private val dataDragonService: DataDragonService) : Data
         dataDragonService.GetSummonerSpell(version, locale.id).await()
 
     //realms
+
     override suspend fun getRealms(platform: Platform): Realms =
         dataDragonService.GetRealms(platform.localeName).await()
 
