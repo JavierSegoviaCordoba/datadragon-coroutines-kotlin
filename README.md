@@ -4,7 +4,20 @@ Features:
 - Kotlin Coroutine compatible
 
 ## Implementation
-TODO upload to bintray
+Add this thee repositories:
+```
+repositories {
+    jcenter()
+    maven { url "https://dl.bintray.com/javiersegoviacordoba/datadragon-coroutines-kotlin" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+}
+```
+And the dependency:
+```
+dependencies {
+    implementation 'com.javiersc:datadragon-coroutines-kotlin:1.0'
+}
+```
 
 ## Usage
 - First of all, you can check a lot of examples inside [Kotlin test folder](/src/test/kotlin).
