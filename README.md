@@ -21,7 +21,7 @@ dependencies {
 
 ## Usage
 - First of all, you can check a lot of examples inside [Kotlin test folder](/src/test/kotlin).
-- To access to all functions:
+- You can access to all functions using:
 ```kotlin
 val dataDragon = DataDragon()
 ```
