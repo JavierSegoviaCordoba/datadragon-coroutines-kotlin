@@ -2,18 +2,18 @@ package datadragon.repository
 
 import datadragon.constants.Locale
 import datadragon.constants.Platform
-import datadragon.service.DataDragonService
-import datadragon.service.cdn.champion.dto.ChampionDto
-import datadragon.service.cdn.championfulllist.dto.ChampionFullDto
-import datadragon.service.cdn.championshortlist.dto.ChampionShortDto
-import datadragon.service.cdn.item.dto.ItemDto
-import datadragon.service.cdn.language.dto.LanguageDto
-import datadragon.service.cdn.map.dto.MapDto
-import datadragon.service.cdn.profileicon.dto.ProfileIconDto
-import datadragon.service.cdn.runesreforged.dto.RuneReforged
-import datadragon.service.cdn.sticker.dto.StickerDto
-import datadragon.service.cdn.summonerspell.dto.SummonerSpellDto
-import datadragon.service.realms.realms.dto.Realms
+import datadragon.datasource.DataDragonService
+import datadragon.model.cdn.champion.ChampionDto
+import datadragon.model.cdn.championfulllist.ChampionFullDto
+import datadragon.model.cdn.championshortlist.ChampionShortDto
+import datadragon.model.cdn.item.ItemDto
+import datadragon.model.cdn.language.LanguageDto
+import datadragon.model.cdn.map.MapDto
+import datadragon.model.cdn.profileicon.ProfileIconDto
+import datadragon.model.cdn.runesreforged.RuneReforged
+import datadragon.model.cdn.sticker.StickerDto
+import datadragon.model.cdn.summonerspell.SummonerSpellDto
+import datadragon.model.realms.Realms
 import retrofit2.await
 
 interface DataDragonRepo {
