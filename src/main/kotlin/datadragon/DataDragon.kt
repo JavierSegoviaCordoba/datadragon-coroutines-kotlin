@@ -3,7 +3,7 @@ package datadragon
 import datadragon.constants.Locale
 import datadragon.constants.Platform
 import datadragon.di.modules
-import datadragon.repository.DataDragonApi
+import datadragon.repository.DataDragonRepo
 import datadragon.service.cdn.champion.dto.Champion
 import datadragon.service.cdn.championfulllist.dto.ChampionFull
 import datadragon.service.cdn.championshortlist.dto.ChampionShort
@@ -28,7 +28,7 @@ class DataDragon : KoinComponent {
         }
     }
 
-    private val dataDragonApi by inject<DataDragonApi>()
+    private val dataDragonApi by inject<DataDragonRepo>()
 
     //api
     suspend fun getVersionLists() = dataDragonApi.getVersionsList()

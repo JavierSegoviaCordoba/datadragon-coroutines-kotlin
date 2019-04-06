@@ -16,7 +16,7 @@ import datadragon.service.cdn.summonerspell.dto.SummonerSpellDto
 import datadragon.service.realms.realms.dto.Realms
 import retrofit2.await
 
-interface DataDragonApi {
+interface DataDragonRepo {
 
     //api
 
@@ -41,7 +41,7 @@ interface DataDragonApi {
     suspend fun getRealms(platform: Platform): Realms
 }
 
-class DataDragonApiImpl(private val dataDragonService: DataDragonService) : DataDragonApi {
+class DataDragonApiRepo(private val dataDragonService: DataDragonService) : DataDragonRepo {
 
     //api
 
