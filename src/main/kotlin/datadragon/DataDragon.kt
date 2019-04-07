@@ -3,7 +3,6 @@ package datadragon
 import datadragon.constants.Locale
 import datadragon.constants.Platform
 import datadragon.di.modules
-import datadragon.repository.DataDragonRepo
 import datadragon.model.cdn.champion.Champion
 import datadragon.model.cdn.championfulllist.ChampionFull
 import datadragon.model.cdn.championshortlist.ChampionShort
@@ -14,29 +13,23 @@ import datadragon.model.cdn.runesreforged.Rune
 import datadragon.model.cdn.runesreforged.RuneReforged
 import datadragon.model.cdn.sticker.Sticker
 import datadragon.model.cdn.summonerspell.SummonerSpell
+import datadragon.repository.DataDragonRepo
+import org.koin.core.Koin
 import org.koin.core.KoinComponent
-import org.koin.core.context.startKoin
 import org.koin.core.inject
+import org.koin.dsl.koinApplication
 
-class DataDragon : KoinComponent {
+class DataDragon : DataDragonKoinComponent() {
 
-    companion object {
-        init {
-            startKoin {
-                modules(modules)
-            }
-        }
-    }
-
-    private val dataDragonApi by inject<DataDragonRepo>()
+    private val dataDragonRepo by inject<DataDragonRepo>()
 
     //api
-    suspend fun getVersionLists() = dataDragonApi.getVersionsList()
+    suspend fun getVersionLists() = dataDragonRepo.getVersionsList()
 
     suspend fun getChampion(championId: String, version: String = "", locale: Locale = Locale.EN_US): Champion =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getChampion(lastVersion, locale, championId).data.entries.first().value
+            dataDragonRepo.getChampion(lastVersion, locale, championId).data.entries.first().value
         }
 
     //cdn
@@ -47,7 +40,7 @@ class DataDragon : KoinComponent {
     ): ChampionShort? =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getChampionList(lastVersion, locale).data.values.toList()
+            dataDragonRepo.getChampionList(lastVersion, locale).data.values.toList()
                 .firstOrNull { it.id == championId }
         }
 
@@ -58,58 +51,58 @@ class DataDragon : KoinComponent {
     ): ChampionShort? =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getChampionList(lastVersion, locale).data.values.toList()
+            dataDragonRepo.getChampionList(lastVersion, locale).data.values.toList()
                 .firstOrNull { it.key == championKey.toString() }
         }
 
     suspend fun getChampionFullList(version: String = "", locale: Locale = Locale.EN_US): List<ChampionFull> =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getChampionFullList(lastVersion, locale).data.values.toList()
+            dataDragonRepo.getChampionFullList(lastVersion, locale).data.values.toList()
         }
 
     suspend fun getChampionList(version: String = "", locale: Locale = Locale.EN_US): List<ChampionShort> =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getChampionList(lastVersion, locale).data.values.toList()
+            dataDragonRepo.getChampionList(lastVersion, locale).data.values.toList()
         }
 
     suspend fun getItemList(version: String = "", locale: Locale = Locale.EN_US): List<Item> =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getItem(lastVersion, locale).data.values.toList()
+            dataDragonRepo.getItem(lastVersion, locale).data.values.toList()
         }
 
     suspend fun getItem(itemId: Int, version: String = "", locale: Locale = Locale.EN_US): Item? =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getItem(lastVersion, locale).data[itemId]
+            dataDragonRepo.getItem(lastVersion, locale).data[itemId]
         }
 
     suspend fun getLanguage(version: String = "", locale: Locale = Locale.EN_US): Language =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getLanguage(lastVersion, locale).language
+            dataDragonRepo.getLanguage(lastVersion, locale).language
         }
 
-    suspend fun getLanguages() = dataDragonApi.getLanguages()
+    suspend fun getLanguages() = dataDragonRepo.getLanguages()
 
     suspend fun getProfileIconList(version: String = "", locale: Locale = Locale.EN_US): List<ProfileIcon> =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getProfileIcon(lastVersion, locale).profileIcon.values.toList()
+            dataDragonRepo.getProfileIcon(lastVersion, locale).profileIcon.values.toList()
         }
 
     suspend fun getProfileIcon(profileIconId: Int, version: String = "", locale: Locale = Locale.EN_US): ProfileIcon? =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getProfileIcon(lastVersion, locale).profileIcon[profileIconId]
+            dataDragonRepo.getProfileIcon(lastVersion, locale).profileIcon[profileIconId]
         }
 
     suspend fun getRunesReforgedList(version: String = "", locale: Locale = Locale.EN_US): List<RuneReforged> =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getRunesReforged(lastVersion, locale)
+            dataDragonRepo.getRunesReforged(lastVersion, locale)
         }
 
     suspend fun getRuneReforgedKeystone(
@@ -119,7 +112,7 @@ class DataDragon : KoinComponent {
     ): RuneReforged? =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getRunesReforged(lastVersion, locale).firstOrNull { it.id == runeReforgedId }
+            dataDragonRepo.getRunesReforged(lastVersion, locale).firstOrNull { it.id == runeReforgedId }
         }
 
     suspend fun getRuneReforgedRune(
@@ -129,7 +122,7 @@ class DataDragon : KoinComponent {
     ): Rune? =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            val runeReforgedList = dataDragonApi.getRunesReforged(lastVersion, locale)
+            val runeReforgedList = dataDragonRepo.getRunesReforged(lastVersion, locale)
             val slots = runeReforgedList.flatMap { it.slots }
             val runeList = slots.flatMap { it.runes }
             runeList.firstOrNull { it.id == runeReforgedId }
@@ -138,13 +131,13 @@ class DataDragon : KoinComponent {
     suspend fun getStickerList(version: String = "", locale: Locale = Locale.EN_US): List<Sticker> =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getSticker(lastVersion, locale).data.values.toList()
+            dataDragonRepo.getSticker(lastVersion, locale).data.values.toList()
         }
 
     suspend fun getSummonerSpellList(version: String = "", locale: Locale = Locale.EN_US): List<SummonerSpell> =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getSummonerSpell(lastVersion, locale).summonerSpell.values.toList()
+            dataDragonRepo.getSummonerSpell(lastVersion, locale).summonerSpell.values.toList()
         }
 
     suspend fun getSummonerSpell(
@@ -154,11 +147,21 @@ class DataDragon : KoinComponent {
     ): SummonerSpell? =
         with(version) {
             val lastVersion = if (version == "") getVersionLists()[0] else version
-            dataDragonApi.getSummonerSpell(lastVersion, locale).summonerSpell.values.toList()
+            dataDragonRepo.getSummonerSpell(lastVersion, locale).summonerSpell.values.toList()
                 .firstOrNull { it.id == summonerSpellId }
         }
 
     //realms
-    suspend fun getRealms(platform: Platform = Platform.NA) = dataDragonApi.getRealms(platform)
+    suspend fun getRealms(platform: Platform = Platform.NA) = dataDragonRepo.getRealms(platform)
+
+}
+
+abstract class DataDragonKoinComponent : KoinComponent {
+
+    companion object {
+        val koinApp = koinApplication { modules(modules) }.koin
+    }
+
+    override fun getKoin(): Koin = koinApp
 
 }
